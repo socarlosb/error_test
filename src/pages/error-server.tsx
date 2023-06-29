@@ -8,7 +8,7 @@ export default function Page({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <main>
-      <p>index page from/pages</p>
+      <p>error client page</p>
       <p>Title: {data.title}</p>
       <p>Number: {data.randomNumber}</p>
       <Navigation />
@@ -20,5 +20,7 @@ export const getServerSideProps: GetServerSideProps<{
   data: ExampleData;
 }> = async () => {
   const data = await fetchTest();
-  return { props: { data } };
+
+  const ErrorMessage = `Server error with data: ${data.title} / ${data.randomNumber}`;
+  throw new Error(ErrorMessage);
 };

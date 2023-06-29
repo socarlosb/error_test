@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import { fetchTest } from "@/lib";
 import { ExampleData } from "@/types";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -6,14 +5,22 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 export default function Page({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return (
-    <main>
-      <p>index page from/pages</p>
-      <p>Title: {data.title}</p>
-      <p>Number: {data.randomNumber}</p>
-      <Navigation />
-    </main>
-  );
+  const ErrorMessage = `Client custom error with data: ${data.title} / ${data.randomNumber}`;
+  throw new Error(ErrorMessage, {
+    cause: {
+      name: "my name",
+      customMessage: "some random message",
+    },
+  });
+
+  // return (
+  //   <main>
+  //     <p>error client page</p>
+  //     <p>Title: {data.title}</p>
+  //     <p>Number: {data.randomNumber}</p>
+  //     <Navigation />
+  //   </main>
+  // );
 }
 
 export const getServerSideProps: GetServerSideProps<{
